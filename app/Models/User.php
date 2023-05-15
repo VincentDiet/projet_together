@@ -10,6 +10,13 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\Participation;
+use App\Models\Follower;
+use App\Models\Activity;
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -24,9 +31,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'pseudo',
+        'firstname',
+        'lastname',
         'email',
         'password',
+        'birthday',
+        'city',
+        'country',
+        'small_description',
+        'long_description'
     ];
 
     /**
@@ -58,4 +72,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function participations(): HasMany
+    {
+        return $this->hasMany(Participation::class, 'participant_id');
+    }
+
+    public function activities(): HasMany
+    {
+        return $this->hasMany(Activity::class, 'author_id');
+    }
+
+    public function followers(): HasMany
+    {
+        return $this->hasMany(Follower::class, 'followed_id');
+    }
+
+    public function follows(): HasMany
+    {
+        return $this->hasMany(Follower::class, 'follower_id');
+    }
 }
