@@ -1,16 +1,7 @@
 <script setup>
 import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
-import CardList from "@/Components/CardList.vue";
-import CategoryList from "@/Components/CategoryList.vue";
-import { ref, computed, reactive } from "vue";
-import { useActivityStore } from "@/stores/activityStore.js";
-
-const activityStore = useActivityStore();
-activityStore.fetchCloseActivities();
-const closeActivities = computed(() => {
-  return activityStore.closeActivities;
-});
+import Card from "@/Components/Card.vue";
 </script>
 
 <template>
@@ -60,13 +51,78 @@ const closeActivities = computed(() => {
     </section>
 
     <!-- // CATEGORIES -->
-    <CategoryList />
+    <section class="relative">
+      <div class="flex overflow-x-auto -mx-8 px-8 text-xs">
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 1"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 1</p>
+        </div>
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 2"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 2</p>
+        </div>
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 3"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 3</p>
+        </div>
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 4"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 4</p>
+        </div>
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 5"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 5</p>
+        </div>
+        <div class="flex-shrink-0 w-1/6 mr-6">
+          <img
+            src="https://via.placeholder.com/100"
+            alt="Image 5"
+            class="rounded-full shadow-lg"
+          />
+          <p class="text-center mt-2">Élément 5</p>
+        </div>
+      </div>
+      <div
+        class="absolute -right-7 top-2 text-slate-900 bg-gray-50 p-1 rounded-full opacity-50"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-8 w-8"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M6.4 18L5 16.6L9.575 12L5 7.4L6.4 6l6 6l-6 6Zm6.6 0l-1.4-1.4l4.575-4.6L11.6 7.4L13 6l6 6l-6 6Z"
+          />
+        </svg>
+      </div>
+    </section>
 
     <!-- ACTIVITE A PROXIMITE -->
     <section class="my-12">
       <h2 class="mb-6 font-bold text-lg">Activités à proximité</h2>
       <div class="relative">
-        <CardList :activities="closeActivities" />
+        <Card />
       </div>
     </section>
   </AppLayout>

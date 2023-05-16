@@ -17,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/categories', function () {
+    $categories = App\Models\Category::all();
+    return response()->json($categories);
+});
+
+Route::get('/activities/closest', function () {
+    $activities = App\Models\Activity::take(10)->with('category', 'images', 'participations', 'author')->get();
+    return response()->json($activities);
+});
