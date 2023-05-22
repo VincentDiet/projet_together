@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,4 @@ Route::get('/categories', function () {
     return response()->json($categories);
 });
 
-Route::get('/activities/closest', function () {
-    $activities = App\Models\Activity::take(10)->with('category', 'images', 'participations', 'author')->get();
-    return response()->json($activities);
-});
+Route::get('/activities', [ActivityController::class, 'getActivitiesWithDistances']);

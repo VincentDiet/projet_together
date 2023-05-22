@@ -31,7 +31,7 @@ class UserFactory extends Factory
             'firstname' => $faker->firstName(),
             'pseudo' => $faker->firstName(),
             'city' => $faker->city(),
-            'country' => 'Belgium', 
+            'country' => 'Belgium',
             'small_description' => $faker->sentence(5),
             'long_description' => $faker->sentence(25),
             'date_of_birth' => $faker->date(),
