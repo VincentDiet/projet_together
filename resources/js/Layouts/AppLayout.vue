@@ -34,7 +34,7 @@ defineProps({
 <template>
   <div>
     <div
-      class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark min-h-screen px-8 py-10 text-slate-50 overflow-hidden"
+      class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark min-h-screen px-8 pt-10 text-slate-50 overflow-hidden pb-20"
     >
       <Head :title="title" />
 

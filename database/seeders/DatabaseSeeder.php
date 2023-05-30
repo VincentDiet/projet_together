@@ -182,7 +182,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\Activity::factory(29)->create();
         \App\Models\Image::factory(200)->create();
-        \App\Models\Participation::factory(30)->create();
+        \App\Models\Participation::factory(200)->create();
         \App\Models\Follower::factory(10)->create();
     }
 }

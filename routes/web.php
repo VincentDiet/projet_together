@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Activity;
+use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,7 +34,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+    Route::get('/activities/add', function () {
+        return Inertia::render('AddActivity', ['categories' => Category::All()]);
+    })->name('activities.add');
     Route::get('/activities/{id}', function ($id) {
-        return Inertia::render('ShowActivity', ['activity' => Activity::with('images')->where('id', $id)->first()]);
+        return Inertia::render('ShowActivity', ['activity' => Activity::with('images', 'category', 'author.activities.participations', 'participations.participant')->where('id', $id)->first()]);
     })->name('activities.show');
 });
