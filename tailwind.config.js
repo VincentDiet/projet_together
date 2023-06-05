@@ -21,6 +21,7 @@ export default {
                 "together-cyan-light": "#7BBFBE",
                 "together-cyan-dark": "#4F98BD",
                 "together-green": "#04CB8C",
+                "together-green-light": "#cbe3e5",
                 "together-blue": "#4B8698",
             },
         },
