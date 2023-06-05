@@ -35,7 +35,7 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
     Route::get('/activities/add', function () {
-        return Inertia::render('AddActivity', ['categories' => Category::All()]);
+        return Inertia::render('AddActivity', ['categories' => Category::All(), 'user' => Auth::user()]);
     })->name('activities.add');
     Route::get('/activities/{id}', function ($id) {
         return Inertia::render('ShowActivity', ['activity' => Activity::with('images', 'category', 'author.activities.participations', 'participations.participant')->where('id', $id)->first()]);

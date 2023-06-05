@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ActivityController extends Controller
 {
@@ -55,5 +56,11 @@ class ActivityController extends Controller
         ));
 
         return $distance;
+    }
+
+    public function addActivity(Request $request)
+    {
+        $activity = Activity::create($request);
+        return response()->json($activity);
     }
 }

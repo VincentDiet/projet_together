@@ -7,16 +7,12 @@ export const useActivityStore = defineStore("activity", () => {
     const activities = ref([]);
 
     const fetchActivities = async () => {
-        try {
-            const locationStore = useLocationStore();
-            const { latitude, longitude } = locationStore.coords;
-            const data = await axios.get(`/api/activities/`, {
-                params: { longitude, latitude },
-            });
-            activities.value = data.data;
-        } catch (error) {
-            return error;
-        }
+        const locationStore = useLocationStore();
+        const { latitude, longitude } = locationStore.coords;
+        const data = await axios.get(`/api/activities/`, {
+            params: { longitude, latitude },
+        });
+        activities.value = data.data;
     };
 
     const getActivitiesSortedByDistance = () => {
@@ -31,9 +27,27 @@ export const useActivityStore = defineStore("activity", () => {
             );
     };
 
+    const addActivities = async (data) => {
+        const test2 = await axios.get(
+            `http://api.positionstack.com/v1/forward`,
+            {
+                params: {
+                    access_key: "bdd5cfd74b5f9ea8f10dfba7e953249a",
+                    query: "1600 Pennsylvania Ave NW, Washington DC",
+                },
+            }
+        );
+        console.log(test2);
+        // const test = await axios.post(`/api/activities`, {
+        //     data,
+        // });
+        // console.log(test);
+    };
+
     return {
         fetchActivities,
         getActivitiesSortedByDistance,
         getActivitiesSortedByDate,
+        addActivities,
     };
 });
