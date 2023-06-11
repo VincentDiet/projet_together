@@ -53,14 +53,17 @@ const getDistance = computed(() => {
   // Formule de la distance entre deux points sur une sphère
   const distance =
     2 * earthRadius * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(userLatRad) * Math.cos(activityLatRad) * Math.pow(Math.sin(deltaLon / 2), 2)));
+    2 * earthRadius * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(userLatRad) * Math.cos(activityLatRad) * Math.pow(Math.sin(deltaLon / 2), 2)));
   return distance.toFixed(1);
 });
 
 const rating = computed(() => {
   const notes = props.activity.author.activities.flatMap((activity) =>
     activity.participations.filter((participation) => participation.organizator_note).map((participation) => participation.organizator_note)
+    activity.participations.filter((participation) => participation.organizator_note).map((participation) => participation.organizator_note)
   );
 
+  const average = notes.length ? notes.reduce((a, b) => a + b) / notes.length : 0;
   const average = notes.length ? notes.reduce((a, b) => a + b) / notes.length : 0;
 
   return average;
@@ -69,10 +72,12 @@ const rating = computed(() => {
 
 <template>
   <AppLayout :title="activity.title" class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark">
+  <AppLayout :title="activity.title" class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark">
     <section class="relative -mx-8 -mt-10 bg-black h-96 w-screen">
       <div class="z-10 w-screen absolute h-16 bg-opacity-25 text-zinc-900 bg-black flex items-center justify-between px-4">
         <div>
           <a :href="route('dashboard')"
+            ><svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 24 24">
             ><svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -101,6 +106,8 @@ const rating = computed(() => {
         <h1 class="font-bold text-xl pl-2 mb-1">{{ activity.title }}</h1>
         <div class="py-1 px-2 bg-white text-together-green font-bold w-auto rounded-lg text-sm inline-flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 24 24">
+        <div class="py-1 px-2 bg-white text-together-green font-bold w-auto rounded-lg text-sm inline-flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" viewBox="0 0 24 24">
             <path
               fill="currentColor"
               d="M12 12q.825 0 1.413-.588T14 10q0-.825-.588-1.413T12 8q-.825 0-1.413.588T10 10q0 .825.588 1.413T12 12Zm0 10q-4.025-3.425-6.012-6.362T4 10.2q0-3.75 2.413-5.975T12 2q3.175 0 5.588 2.225T20 10.2q0 2.5-1.988 5.438T12 22Z"
@@ -110,9 +117,12 @@ const rating = computed(() => {
         </div>
       </div>
       <img :src="renderImage" alt="" class="absolute object-cover h-96 w-screen" />
+      <img :src="renderImage" alt="" class="absolute object-cover h-96 w-screen" />
     </section>
     <div class="w-screen h-16 bg-together-blue -mx-8 px-8 flex items-center justify-between">
+    <div class="w-screen h-16 bg-together-blue -mx-8 px-8 flex items-center justify-between">
       <div class="capitalize font-bold">{{ date }}</div>
+      <div class="font-bold text-together-blue bg-white py-0.5 px-3 rounded-lg text-sm">
       <div class="font-bold text-together-blue bg-white py-0.5 px-3 rounded-lg text-sm">
         {{ activity.category.name }}
       </div>
@@ -122,6 +132,7 @@ const rating = computed(() => {
       <p class="py-4">{{ dateTime }}</p>
       <p>{{ activity.description }}</p>
       <div class="flex items-center text-sm mt-10 mb-5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-together-green" viewBox="0 0 24 24">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-together-green" viewBox="0 0 24 24">
           <path
             fill="currentColor"
@@ -134,8 +145,12 @@ const rating = computed(() => {
         </div>
       </div>
       <div class="w-full h-36 bg-white flex items-center justify-center text-gray-900 rounded-xl uppercase">Map here</div>
+      <div class="w-full h-36 bg-white flex items-center justify-center text-gray-900 rounded-xl uppercase">Map here</div>
       <section class="my-12">
         <p>Organisé par :</p>
+        <img :src="activity.author.profile_photo_path" alt="" class="rounded-full w-14 h-14 ml-2 m-4 object-cover" />
+        <span class="font-bold">{{ activity.author.firstname }} {{ activity.author.lastname }}</span>
+        <StarRating :rating="rating" :star-size="15" :show-rating="false"></StarRating>
         <img :src="activity.author.profile_photo_path" alt="" class="rounded-full w-14 h-14 ml-2 m-4 object-cover" />
         <span class="font-bold">{{ activity.author.firstname }} {{ activity.author.lastname }}</span>
         <StarRating :rating="rating" :star-size="15" :show-rating="false"></StarRating>
@@ -146,9 +161,12 @@ const rating = computed(() => {
         <div class="flex flex-wrap">
           <template v-for="participation of activity.participations" :key="participation.id">
             <img :src="participation.participant.profile_photo_path" alt="" class="rounded-full w-10 h-10 m-2 shadow-lg object-cover" />
+          <template v-for="participation of activity.participations" :key="participation.id">
+            <img :src="participation.participant.profile_photo_path" alt="" class="rounded-full w-10 h-10 m-2 shadow-lg object-cover" />
           </template>
         </div>
       </section>
+      <div class="bg-together-green text-white font-bold rounded-full py-1.5 mt-3 px-8 inline-block mt-8">S'inscrire</div>
       <div class="bg-together-green text-white font-bold rounded-full py-1.5 mt-3 px-8 inline-block mt-8">S'inscrire</div>
     </section>
   </AppLayout>
