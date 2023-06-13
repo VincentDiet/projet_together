@@ -24,16 +24,18 @@ class Activity extends Model
      */
     protected $fillable = [
         'title',
-        'date',
         'duration',
         'max_participants',
+        'start_datetime',
         'adress',
         'city',
         'country',
         'description',
         'photo',
         'latitude',
-        'longitude'
+        'longitude',
+        'category_id',
+        'author_id'
     ];
 
     public function images(): HasMany

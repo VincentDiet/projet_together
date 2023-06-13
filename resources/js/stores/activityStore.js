@@ -1,6 +1,7 @@
 import { ref, computed, reactive } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import moment from "moment";
 import { useLocationStore } from "@/stores/locationStore.js";
 
 export const useActivityStore = defineStore("activity", () => {
@@ -28,20 +29,26 @@ export const useActivityStore = defineStore("activity", () => {
     };
 
     const addActivities = async (data) => {
-        const test2 = await axios.get(
-            `http://api.positionstack.com/v1/forward`,
-            {
-                params: {
-                    access_key: "bdd5cfd74b5f9ea8f10dfba7e953249a",
-                    query: "1600 Pennsylvania Ave NW, Washington DC",
-                },
-            }
+        // Calcul de la longitude et latitude
+        const coords = await axios.get(`https://geocode.maps.co/search`, {
+            params: {
+                q: data.adress + " " + data.city + " " + data.country,
+            },
+        });
+        data.longitude = coords.data[0].lon;
+        data.latitude = coords.data[0].lat;
+
+        // Convertion en DateTime SQL
+        const dateTime = data.date + " " + data.time;
+        data.start_datetime = moment(dateTime, "DD/MM/YYYY HH:mm").format(
+            "YYYY-MM-DD HH:mm:ss"
         );
-        console.log(test2);
-        // const test = await axios.post(`/api/activities`, {
-        //     data,
-        // });
-        // console.log(test);
+
+        const test = await axios.post(`/api/activities`, {
+            data,
+        });
+
+        console.log(test);
     };
 
     return {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Carbon\Carbon;
+
 
 class ActivityController extends Controller
 {
@@ -60,7 +62,17 @@ class ActivityController extends Controller
 
     public function addActivity(Request $request)
     {
-        $activity = Activity::create($request);
-        return response()->json($activity);
+        try {
+            $requestData = $request->input("data");
+            $requestData['start_datetime'] = Carbon::parse($requestData['start_datetime']);
+
+           
+            
+            $activity = Activity::create($requestData);
+
+            return response()->json($activity);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()]);
+        }
     }
 }
