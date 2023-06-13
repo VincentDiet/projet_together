@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout_new.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import { ref, computed, reactive, onMounted } from "vue";
 import Input from "@/Components/Input.vue";
 import { useActivityStore } from "@/stores/activityStore.js";

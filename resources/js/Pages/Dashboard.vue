@@ -1,17 +1,21 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout_new.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 import CardList from "@/Components/CardList.vue";
 import CategoryList from "@/Components/CategoryList.vue";
 import { ref, computed, reactive, onMounted } from "vue";
 import { useActivityStore } from "@/stores/activityStore.js";
 import { useLocationStore } from "@/stores/locationStore.js";
+import Loader from "@/Components/Loader.vue";
 const locationStore = useLocationStore();
 const activityStore = useActivityStore();
+
+const loader = ref(true);
 
 onMounted(async () => {
   await locationStore.fetchCoords();
   await activityStore.fetchActivities();
+  loader.value = false;
 });
 
 const nearestActivities = computed(() => {
@@ -27,6 +31,13 @@ const nextActivities = computed(() => {
     title="Dashboard"
     class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark"
   >
+    <template v-if="loader">
+      <div
+        class="fixed w-full h-screen flex items-center justify-center top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-together-cyan-light to-together-cyan-dark z-50"
+      >
+        <Loader></Loader>
+      </div>
+    </template>
     <h1 class="text-4xl font-extrabold">Together</h1>
 
     <!-- // RECHERCHE -->

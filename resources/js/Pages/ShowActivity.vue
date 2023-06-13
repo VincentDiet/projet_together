@@ -1,5 +1,5 @@
 <script setup>
-import AppLayout from "@/Layouts/AppLayout_new.vue";
+import AppLayout from "@/Layouts/AppLayout.vue";
 import Welcome from "@/Components/Welcome.vue";
 import CardList from "@/Components/CardList.vue";
 import CategoryList from "@/Components/CategoryList.vue";
@@ -8,6 +8,9 @@ import { useActivityStore } from "@/stores/activityStore.js";
 import { useLocationStore } from "@/stores/locationStore.js";
 import { getFormatedDate } from "@/helpers.js";
 import StarRating from "vue-star-rating";
+import Loader from "@/Components/Loader.vue";
+
+const loader = ref(true);
 
 const locationStore = useLocationStore();
 const coords = ref({ latitude: null, longitude: null });
@@ -15,6 +18,7 @@ onMounted(async () => {
   await locationStore.fetchCoords();
   coords.value.latitude = locationStore.coords.latitude;
   coords.value.longitude = locationStore.coords.longitude;
+  loader.value = false;
 });
 
 const props = defineProps({
@@ -95,6 +99,13 @@ const rating = computed(() => {
     :title="activity.title"
     class="bg-gradient-to-b from-together-cyan-light to-together-cyan-dark"
   >
+    <template v-if="loader">
+      <div
+        class="fixed w-full h-screen flex items-center justify-center top-0 left-0 right-0 bottom-0 bg-gradient-to-b from-together-cyan-light to-together-cyan-dark z-50"
+      >
+        <Loader></Loader>
+      </div>
+    </template>
     <section class="relative -mx-8 -mt-10 bg-black h-96 w-screen">
       <div
         class="z-10 w-screen absolute h-16 bg-opacity-25 text-zinc-900 bg-black flex items-center justify-between px-4"
