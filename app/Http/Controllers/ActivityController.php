@@ -70,7 +70,7 @@ class ActivityController extends Controller
             
             $activity = Activity::create($requestData);
 
-            return response()->json($activity);
+            return response()->json(['redirect' => route('Dashboard')]);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()]);
         }

@@ -29,6 +29,7 @@ const submitForm = async (e) => {
   e.target.disabled = true;
   await activityStore.addActivities(formData);
   e.target.disabled = false;
+  window.location.href = "https://together.rowcket.be/dashboard";
 };
 </script>
 
