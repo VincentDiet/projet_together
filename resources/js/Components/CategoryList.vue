@@ -12,7 +12,7 @@ const categories = computed(() => {
 
 <template>
   <section class="relative">
-    <ul class="flex overflow-x-auto -mx-8 px-8 text-xs">
+    <ul class="flex overflow-x-auto scrollbar-none -mx-8 px-8 text-xs">
       <template v-for="category in categories" :key="category.id">
         <CategoryItem :name="category.name" :photo="category.photo" />
       </template>

@@ -15,7 +15,9 @@ defineProps({
   <div class="bg-gray-100 min-h-screen pt-8">
     <div class="flex flex-col sm:justify-center items-center sm:pt-0">
       <div class="bg-white w-full p-10 shadow-lg">
-        <h1 class="text-4xl text-gray-400 font-bold text-center pb-10">Together</h1>
+        <h1 class="text-4xl text-gray-400 font-bold text-center pb-10">
+          Together
+        </h1>
         <div v-if="canLogin" class="text-center z-10">
           <Link
             v-if="$page.props.auth.user"
